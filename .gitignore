@@ -1,8 +1,7 @@
-.env
-__pycache__/
+.git
+.github
+__pycache__
 *.pyc
-*.log
-venv/
-.idea/
-.vscode/
-node_modules/
+.env
+venv
+screenshots

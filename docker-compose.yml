@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    container_name: statuspulse-app
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: statuspulse
+      DB_USER: admin
+      DB_PASSWORD: password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - statuspulse-network
+
+  postgres:
+    image: postgres:16
+    container_name: statuspulse-postgres
+    environment:
+      POSTGRES_DB: statuspulse
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - statuspulse-network
+
+  redis:
+    image: redis:7
+    container_name: statuspulse-redis
+    networks:
+      - statuspulse-network
+
+volumes:
+  postgres_data:
+
+networks:
+  statuspulse-network:

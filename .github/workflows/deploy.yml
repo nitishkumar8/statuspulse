@@ -1,0 +1,21 @@
+name: Deploy Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deployment Started
+        run: echo "Deploy Started"
+
+      - name: Simulated Health Check
+        run: echo "Health Check Passed"
+
+      - name: Deployment Success
+        run: echo "Deployment Completed"

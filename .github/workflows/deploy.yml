@@ -10,12 +10,38 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Deployment Started
-        run: echo "Deploy Started"
+    permissions:
+      contents: read
+      packages: write
 
-      - name: Simulated Health Check
-        run: echo "Health Check Passed"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
+
+      - name: Push Latest Image
+        run: docker push ghcr.io/${{ github.repository }}:latest
+
+      - name: Push SHA Tagged Image
+        run: docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+      - name: Simulated Deployment
+        run: echo "Deploying application..."
+
+      - name: Health Check
+        run: |
+          echo "Checking application health..."
+          curl -f https://example.com/health || exit 1
 
       - name: Deployment Success
-        run: echo "Deployment Completed"
+        run: echo "Deployment Completed Successfully"
+
+      - name: Notification
+        run: echo "Notification Sent"

@@ -1,4 +1,38 @@
+1. Project Title
+
+# StatusPulse DevOps Assignment
+
+2. Architecture Diagram
+
+## Architecture
+
+`````mermaid
+graph TD
+    User --> Caddy
+    Caddy --> StatusPulse
+    StatusPulse --> PostgreSQL
+    StatusPulse --> Redis
+    UptimeKuma --> StatusPulse
+
+# 3. Prerequisites
+
+```markdown id="v5q8pc"
+## Prerequisites
+
+- Docker
+- Docker Compose
+- Ubuntu 24.04
+- Git
+- Caddy
+
+4.Run Locally
+## Run Locally
+
+```bash
 docker compose up -d
+
+
+---
 
 ---
 
@@ -37,5 +71,8 @@ docker compose up -d
 
 ```bash
 ./scripts/backup.sh
-````
-````
+`````
+
+```
+
+```
